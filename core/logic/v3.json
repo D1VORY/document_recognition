@@ -1,0 +1,40 @@
+{
+  "document": "citizen_passport",
+  "fields":[
+    {
+      "id": 1,
+      "name": "surname",
+      "type": "anchor",
+      "regex": "прізвище/ surname"
+    },
+    {
+      "id": 2,
+      "name": "surname_ukr",
+      "type": "value",
+      "regex": "а-яА-Я"
+    },
+    {
+      "id": 3,
+      "name": "surname_eng",
+      "type": "value",
+      "regex": "a-zA-Z"
+    },
+    {
+      "id": 4,
+      "name": "name",
+      "type": "anchor",
+      "regex": "ім'я/ Name"
+    },
+    {
+      "id": 1,
+      "name": "surname",
+      "type": "",
+      "regex": "Водительское удостоверение"
+    },
+    {
+      "id": 1,
+      "name": "surname",
+      "type": "",
+      "regex": "Водительское удостоверение"
+    }
+  ],
