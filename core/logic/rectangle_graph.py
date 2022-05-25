@@ -1,6 +1,8 @@
 import math
 from typing import List
 
+import numpy as np
+
 
 class Point:
     def __init__(self, x, y):
@@ -139,25 +141,77 @@ class YoloRectangle(Rectangle):
 class Node:
     def __init__(self, data):
         self.data = data
-        self.right_nodes = []
-        self.left_nodes = []
-        self.top_nodes = []
-        self.bottom_nodes = []
+        self.right_node = None
+        self.left_node = None
+        self.top_node = None
+        self.bottom_node = None
 
-        self.top_right_nodes = []
-        self.top_left_nodes = []
-        self.bottom_right_nodes = []
-        self.bottom_left_nodes = []
+        self.top_right_node = None
+        self.top_left_node = None
+        self.bottom_right_node = None
+        self.bottom_left_node = None
+
+    def get_corresponding_attr(self, position: str):
+        if position == Rectangle.RIGHT:
+            return self.right_node
+        elif position == Rectangle.TOP_RIGHT:
+            return self.top_right_node
+        elif position == Rectangle.TOP:
+            return self.top_node
+        elif position == Rectangle.TOP_LEFT:
+            return self.top_left_node
+        elif position == Rectangle.LEFT:
+            return self.left_node
+        elif position == Rectangle.BOTTOM_LEFT:
+            return self.bottom_left_node
+        elif position == Rectangle.BOTTOM:
+            return self.bottom_node
+        elif position == Rectangle.BOTTOM_RIGHT:
+            return self.bottom_right_node
+
+    def set_to_corresponding_attr(self, position: str, value):
+        if position == Rectangle.RIGHT:
+            self.right_node = value
+        elif position == Rectangle.TOP_RIGHT:
+            self.top_right_node = value
+        elif position == Rectangle.TOP:
+            self.top_node = value
+        elif position == Rectangle.TOP_LEFT:
+            self.top_left_node = value
+        elif position == Rectangle.LEFT:
+            self.left_node = value
+        elif position == Rectangle.BOTTOM_LEFT:
+            self.bottom_left_node = value
+        elif position == Rectangle.BOTTOM:
+            self.bottom_node = value
+        elif position == Rectangle.BOTTOM_RIGHT:
+            self.bottom_right_node = value
+        return self.get_corresponding_attr(position)
 
 
 class DocumentGraph:
 
     def __init__(self, rectangles: List[Rectangle]):
         self.rectangles = rectangles
+        self.n = len(rectangles)
+        self.distances = np.zeros(shape=(self.n, self.n))
+        self.head = Node(data=None)
+        self.nodes = [Node(data=rec) for rec in rectangles]
+        self.calculate_distances()
 
     def build_rectangle_graph(self):
-        pass
+        for rect_index in range(self.n):
+            kek = self.distances[rect_index]
+            for dist_index in range(len(self.distances[rect_index])):
+                if dist_index == rect_index:
+                    continue #skip the distance to itself
+                position = self.rectangles[rect_index].get_relative_position(self.rectangles[dist_index])
+                node = self.nodes[rect_index]
+                if not node.get_corresponding_attr(position):
+                    node.set_to_corresponding_attr(position, self.nodes[dist_index])
 
-    def find_closest_rectangles(self, rectangle):
-        pass
+    def calculate_distances(self):
+        self.distances = np.random.rand(self.n, self.n) #TODO FUCK IT THIS IS WRONG
+        self.distances = np.sort(self.distances, axis=1)
+        return self.distances
 
