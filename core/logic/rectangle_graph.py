@@ -77,30 +77,6 @@ class Rectangle:
         return self.point2
 
     def get_distance(self, rectangle):
-        left = rectangle.point2.x < self.point1.x
-        right = self.point2.x < rectangle.point1.x
-        bottom = rectangle.point2.y < self.point1.y
-        top = self.point2.y < rectangle.point1.y
-        if top and left:
-            return Point(self.point1.x, self.point2.y).get_distance(Point(rectangle.point2.x, rectangle.point1.y))
-        elif left and bottom:
-            return self.point1.get_distance(rectangle.point2)
-        elif bottom and right:
-            return Point(self.point2.x, self.point1.y).get_distance(Point(rectangle.point1.x, rectangle.point2.y))
-        elif right and top:
-            return self.point2.get_distance(rectangle.point1)
-        elif left:
-            return self.point1.x - rectangle.point2.x
-        elif right:
-            return rectangle.point1.x - self.point2.x
-        elif bottom:
-            return self.point1.y - rectangle.point2.y
-        elif top:
-            return rectangle.point1.y - self.point2.y
-        else:  # rectangles intersect, distance between centers
-            return self.center.get_distance(rectangle.center)
-
-    def get_distance2(self, rectangle):
         position = self.get_relative_position(rectangle)
         res = 0
         if position == self.RIGHT:
@@ -120,16 +96,6 @@ class Rectangle:
         elif position == self.BOTTOM_RIGHT:
             res = self.bottom_right_point.get_distance(rectangle.top_left_point)
         return abs(res)
-            # points_dict = {
-        #     self.RIGHT: (),
-        #     self.TOP_RIGHT: (),
-        #     self.TOP: (),
-        #     self.TOP_LEFT: (),
-        #     self.LEFT: (),
-        #     self.BOTTOM_LEFT: (),
-        #     self.BOTTOM: (),
-        #     self.BOTTOM_RIGHT: (),
-        # }
 
     def get_relative_position(self, rect):
         """return relative position of rectangle from object"""
