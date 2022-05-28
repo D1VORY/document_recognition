@@ -17,7 +17,7 @@ yolo.summary()
 #yolo.inference(media_path="piia.jpg")
 #yolo.get_yolo_detections()
 
-frame = cv2.imread('im1.jpg')
+frame = cv2.imread('im4.jpg')
 frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 bboxes = yolo.predict(frame_rgb, 0.25)
 
@@ -30,14 +30,14 @@ print('fuck')
 #
 
 kek = [res_bboxes[0], res_bboxes[5]]
-for x, y, width, height, _, _ in kek:
+for x, y, width, height, _, _ in res_bboxes:
     rec = YoloRectangle(center_point=Point(x, y), width=width, height=height)
     cv2.rectangle(image, (int(rec.point1.x), int(rec.point1.y)), (int(rec.point2.x), int(rec.point2.y)), color=(0, 255, 0), thickness=3)
 
-cv2.imwrite('res05.jpg', image)
+cv2.imwrite('im41.jpg', image)
 #cv2.rectangle(image, (10,10), (100, 100), color=(0, 255, 0), thickness=3)
-# cv2.imshow('shit', image)
-# k = cv2.waitKey(0)
+cv2.imshow('shit', image)
+k = cv2.waitKey(0)
 # yolo.inference(media_path="road.mp4", is_image=False)
 #
 # yolo.inference(
