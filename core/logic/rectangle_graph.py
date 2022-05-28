@@ -3,6 +3,8 @@ from typing import List
 
 import numpy as np
 
+from core.logic.graph import Node
+
 
 class Point:
     def __init__(self, x, y):
@@ -138,58 +140,7 @@ class YoloRectangle(Rectangle):
         super().__init__(top_left, bottom_right)
 
 
-class Node:
-    def __init__(self, data):
-        self.data = data
-        self.right_node = None
-        self.left_node = None
-        self.top_node = None
-        self.bottom_node = None
-
-        self.top_right_node = None
-        self.top_left_node = None
-        self.bottom_right_node = None
-        self.bottom_left_node = None
-
-    def get_corresponding_attr(self, position: str):
-        if position == Rectangle.RIGHT:
-            return self.right_node
-        elif position == Rectangle.TOP_RIGHT:
-            return self.top_right_node
-        elif position == Rectangle.TOP:
-            return self.top_node
-        elif position == Rectangle.TOP_LEFT:
-            return self.top_left_node
-        elif position == Rectangle.LEFT:
-            return self.left_node
-        elif position == Rectangle.BOTTOM_LEFT:
-            return self.bottom_left_node
-        elif position == Rectangle.BOTTOM:
-            return self.bottom_node
-        elif position == Rectangle.BOTTOM_RIGHT:
-            return self.bottom_right_node
-
-    def set_to_corresponding_attr(self, position: str, value):
-        if position == Rectangle.RIGHT:
-            self.right_node = value
-        elif position == Rectangle.TOP_RIGHT:
-            self.top_right_node = value
-        elif position == Rectangle.TOP:
-            self.top_node = value
-        elif position == Rectangle.TOP_LEFT:
-            self.top_left_node = value
-        elif position == Rectangle.LEFT:
-            self.left_node = value
-        elif position == Rectangle.BOTTOM_LEFT:
-            self.bottom_left_node = value
-        elif position == Rectangle.BOTTOM:
-            self.bottom_node = value
-        elif position == Rectangle.BOTTOM_RIGHT:
-            self.bottom_right_node = value
-        return self.get_corresponding_attr(position)
-
-
-class DocumentGraph:
+class RectangleDocumentGraph:
 
     def __init__(self, rectangles: List[Rectangle]):
         self.rectangles = rectangles

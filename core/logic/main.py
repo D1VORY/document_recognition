@@ -1,3 +1,5 @@
+import json
+
 import cv2
 import numpy as np
 
@@ -13,14 +15,12 @@ recs = [
     for x, y, width, height, _, _ in bboxes_example
 ]
 
-#rec1, rec2 = recs[0], recs[1]
 rec1, rec2 = recs[0], recs[5]
 
-# a = rec1.get_relative_position(rec2)
-# b = rec1.get_distance(rec2)
-# c = rec1.get_distance2(rec2)
-# print(a)
 
-graph = DocumentGraph(recs)
-graph.build_rectangle_graph()
+#graph = DocumentGraph(recs)
+#graph.build_rectangle_graph()
+
+json_example = json.load(open('v3.json', encoding='utf-8'))
+
 print('Done')
