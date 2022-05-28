@@ -83,21 +83,21 @@ class Rectangle:
     def get_distance(self, rectangle):
         position = self.get_relative_position(rectangle)
         res = 0
-        if position == self.RIGHT:
+        if position == Node.RIGHT:
             res = rectangle.top_left_point.x - self.top_right_point.x
-        elif position == self.TOP_RIGHT:
+        elif position == Node.TOP_RIGHT:
             res = self.top_right_point.get_distance(rectangle.bottom_left_point)
-        elif position == self.TOP:
+        elif position == Node.TOP:
             res = self.top_left_point.y - rectangle.bottom_left_point.y
-        elif position == self.TOP_LEFT:
+        elif position == Node.TOP_LEFT:
             res = self.top_left_point.get_distance(rectangle.bottom_right_point)
-        elif position == self.LEFT:
+        elif position == Node.LEFT:
             res = self.top_left_point.x - rectangle.top_right_point.x
-        elif position == self.BOTTOM_LEFT:
+        elif position == Node.BOTTOM_LEFT:
             res = self.bottom_left_point.get_distance(rectangle.top_right_point)
-        elif position == self.BOTTOM:
+        elif position == Node.BOTTOM:
             res = rectangle.top_left_point.y - self.bottom_left_point.y
-        elif position == self.BOTTOM_RIGHT:
+        elif position == Node.BOTTOM_RIGHT:
             res = self.bottom_right_point.get_distance(rectangle.top_left_point)
         return abs(res)
 
@@ -106,21 +106,21 @@ class Rectangle:
         #angle = self.center.get_angle(rect.center)
         angle = self.point1.get_angle(rect.point1)
         if angle <= 22.5 or angle >= 337.5:
-            return self.RIGHT
+            return Node.RIGHT
         elif 67.5 > angle > 22.5:
-            return self.TOP_RIGHT
+            return Node.TOP_RIGHT
         elif 112.5 >= angle >= 67.5:
-            return self.TOP
+            return Node.TOP
         elif 157.5 > angle > 112.5:
-            return self.TOP_LEFT
+            return Node.TOP_LEFT
         elif 202.5 >= angle >= 157.5:
-            return self.LEFT
+            return Node.LEFT
         elif 247.5 > angle > 202.5:
-            return self.BOTTOM_LEFT
+            return Node.BOTTOM_LEFT
         elif 292.5 >= angle >= 247.5:
-            return self.BOTTOM
+            return Node.BOTTOM
         elif 337.5 > angle > 292.5:
-            return self.BOTTOM_RIGHT
+            return Node.BOTTOM_RIGHT
 
 
 class YoloRectangle(Rectangle):

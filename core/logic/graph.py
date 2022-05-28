@@ -1,7 +1,15 @@
-from core.logic.rectangle_graph import Rectangle
 
 
 class Node:
+    TOP = 'TOP'
+    BOTTOM = 'BOTTOM'
+    RIGHT = 'RIGHT'
+    LEFT = 'LEFT'
+    TOP_RIGHT = 'TOP_RIGHT'
+    TOP_LEFT = 'TOP_LEFT'
+    BOTTOM_RIGHT = 'BOTTOM_RIGHT'
+    BOTTOM_LEFT = 'BOTTOM_LEFT'
+
     def __init__(self, data):
         self.data = data
         self.right_node = None
@@ -15,39 +23,39 @@ class Node:
         self.bottom_left_node = None
 
     def get_corresponding_attr(self, position: str):
-        if position == Rectangle.RIGHT:
+        if position == self.RIGHT:
             return self.right_node
-        elif position == Rectangle.TOP_RIGHT:
+        elif position == self.TOP_RIGHT:
             return self.top_right_node
-        elif position == Rectangle.TOP:
+        elif position == self.TOP:
             return self.top_node
-        elif position == Rectangle.TOP_LEFT:
+        elif position == self.TOP_LEFT:
             return self.top_left_node
-        elif position == Rectangle.LEFT:
+        elif position == self.LEFT:
             return self.left_node
-        elif position == Rectangle.BOTTOM_LEFT:
+        elif position == self.BOTTOM_LEFT:
             return self.bottom_left_node
-        elif position == Rectangle.BOTTOM:
+        elif position == self.BOTTOM:
             return self.bottom_node
-        elif position == Rectangle.BOTTOM_RIGHT:
+        elif position == self.BOTTOM_RIGHT:
             return self.bottom_right_node
 
     def set_to_corresponding_attr(self, position: str, node):
-        if position == Rectangle.RIGHT:
+        if position == self.RIGHT:
             self.right_node = node
-        elif position == Rectangle.TOP_RIGHT:
+        elif position == self.TOP_RIGHT:
             self.top_right_node = node
-        elif position == Rectangle.TOP:
+        elif position == self.TOP:
             self.top_node = node
-        elif position == Rectangle.TOP_LEFT:
+        elif position == self.TOP_LEFT:
             self.top_left_node = node
-        elif position == Rectangle.LEFT:
+        elif position == self.LEFT:
             self.left_node = node
-        elif position == Rectangle.BOTTOM_LEFT:
+        elif position == self.BOTTOM_LEFT:
             self.bottom_left_node = node
-        elif position == Rectangle.BOTTOM:
+        elif position == self.BOTTOM:
             self.bottom_node = node
-        elif position == Rectangle.BOTTOM_RIGHT:
+        elif position == self.BOTTOM_RIGHT:
             self.bottom_right_node = node
         return self.get_corresponding_attr(position)
 
