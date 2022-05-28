@@ -3,7 +3,7 @@ import json
 import cv2
 import numpy as np
 
-from core.logic.rectangle_graph import Point, YoloRectangle, DocumentGraph
+from core.logic.rectangle_graph import Point, YoloRectangle, DocumentGraph, RectangleDocumentGraph
 
 bboxes_example = np.load('res_bboxes_example.npy')
 # center_x, center_y, width, height, class_id, probability
@@ -18,8 +18,8 @@ recs = [
 rec1, rec2 = recs[0], recs[5]
 
 
-#graph = DocumentGraph(recs)
-#graph.build_rectangle_graph()
+graph = RectangleDocumentGraph(recs)
+graph.build_rectangle_graph()
 
 json_example = json.load(open('v3.json', encoding='utf-8'))
 

@@ -105,7 +105,7 @@ class DocumentGraph:
     def remove_from_graph(self, node: Node):
         pass
 
-    def get_node_by_id(self, id:int):
+    def get_node_by_id(self, id:int)->Node:
         index = self._nodes_ids.get(id)
         if index is None:
             return None

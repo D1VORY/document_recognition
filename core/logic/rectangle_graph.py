@@ -3,7 +3,7 @@ from typing import List
 
 import numpy as np
 
-from core.logic.graph import Node
+from core.logic.graph import Node, DocumentGraph
 
 
 class Point:
@@ -146,18 +146,20 @@ class RectangleDocumentGraph:
         self.rectangles = rectangles
         self.n = len(rectangles)
         self.distances = np.zeros(shape=(self.n, self.n))
-        self.head = Node(data=None)
-        self.nodes = [Node(data=rec) for rec in rectangles]
         self.calculate_distances()
+        self.graph = DocumentGraph()
+        for i in range(self.n):
+            node = Node(node_id=i, value=f'{self.rectangles[i].top_left_point} ___ {self.rectangles[i].bottom_right_point}')
+            self.graph.add_to_graph(node)
 
     def build_rectangle_graph(self):
         indeces_of_sorted = np.argsort(self.distances, axis=1)
         for rect_index in range(self.n):
             for dist_index in indeces_of_sorted[rect_index, 1:]:
                 position = self.rectangles[rect_index].get_relative_position(self.rectangles[dist_index])
-                node = self.nodes[rect_index]
-                if not node.get_corresponding_attr(position):
-                    node.set_to_corresponding_attr(position, self.nodes[dist_index])
+                node = self.graph.get_node_by_id(rect_index)
+                other_node = self.graph.get_node_by_id(dist_index)
+                node.set_relation(other_node, position)
 
     def calculate_distances(self):
         for i in range(self.n):
