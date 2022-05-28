@@ -107,7 +107,8 @@
       "id": 9,
       "name": "sex",
       "type": "anchor",
-      "regex": "Стать/ Sex"
+      "regex": "Стать/ Sex",
+      "position": []
     },
     {
       "id": 10,
