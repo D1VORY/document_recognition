@@ -200,18 +200,17 @@ class DocumentGraph:
         self.calculate_distances()
 
     def build_rectangle_graph(self):
+        indeces_of_sorted = np.argsort(self.distances, axis=1)
         for rect_index in range(self.n):
-            kek = self.distances[rect_index]
-            for dist_index in range(len(self.distances[rect_index])):
-                if dist_index == rect_index:
-                    continue #skip the distance to itself
+            for dist_index in indeces_of_sorted[rect_index, 1:]:
                 position = self.rectangles[rect_index].get_relative_position(self.rectangles[dist_index])
                 node = self.nodes[rect_index]
                 if not node.get_corresponding_attr(position):
                     node.set_to_corresponding_attr(position, self.nodes[dist_index])
 
     def calculate_distances(self):
-        self.distances = np.random.rand(self.n, self.n) #TODO FUCK IT THIS IS WRONG
-        self.distances = np.sort(self.distances, axis=1)
+        for i in range(self.n):
+            for j in range(self.n):
+                self.distances[i, j] = self.rectangles[i].get_distance(self.rectangles[j])
         return self.distances
 
