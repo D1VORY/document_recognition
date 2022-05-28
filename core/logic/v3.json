@@ -1,40 +1,125 @@
 {
   "document": "citizen_passport",
-  "fields":[
+  "language": ["ukr", "rus", "eng"],
+  "fields": [
     {
       "id": 1,
       "name": "surname",
       "type": "anchor",
-      "regex": "прізвище/ surname"
+      "regex": "прізвище/ surname",
+      "position": []
     },
     {
       "id": 2,
       "name": "surname_ukr",
       "type": "value",
-      "regex": "а-яА-Я"
+      "regex": "а-яА-Я",
+      "position": [
+        {
+          "dep_id": 1,
+          "pos": "TOP"
+        },
+        {
+          "dep_id": 3,
+          "pos": "BOTTOM"
+        }
+      ]
     },
     {
       "id": 3,
       "name": "surname_eng",
       "type": "value",
-      "regex": "a-zA-Z"
+      "regex": "a-zA-Z",
+      "position": [
+        {
+          "dep_id": 2,
+          "pos": "TOP"
+        },
+        {
+          "dep_id": 4,
+          "pos": "BOTTOM"
+        }
+      ]
     },
     {
       "id": 4,
       "name": "name",
       "type": "anchor",
-      "regex": "ім'я/ Name"
+      "regex": "ім'я/ Name",
+      "position": []
     },
     {
-      "id": 1,
-      "name": "surname",
-      "type": "",
-      "regex": "Водительское удостоверение"
+      "id": 5,
+      "name": "name_ukr",
+      "type": "value",
+      "regex": "а-яА-Я",
+      "position": [
+        {
+          "dep_id": 4,
+          "pos": "TOP"
+        },
+        {
+          "dep_id": 6,
+          "pos": "BOTTOM"
+        }
+      ]
     },
     {
-      "id": 1,
-      "name": "surname",
-      "type": "",
-      "regex": "Водительское удостоверение"
+      "id": 6,
+      "name": "name_eng",
+      "type": "value",
+      "regex": "a-zA-Z",
+      "position": [
+        {
+          "dep_id": 5,
+          "pos": "TOP"
+        },
+        {
+          "dep_id": 7,
+          "pos": "BOTTOM"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "middle_name",
+      "type": "anchor",
+      "regex": "По батькові/ Patronymic",
+      "position": []
+    },
+    {
+      "id": 8,
+      "name": "middle_name_value",
+      "type": "value",
+      "regex": "а-яА-Я",
+      "position": [
+        {
+          "dep_id": 7,
+          "pos": "TOP"
+        },
+        {
+          "dep_id": 9,
+          "pos": "BOTTOM"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "name": "sex",
+      "type": "anchor",
+      "regex": "Стать/ Sex"
+    },
+    {
+      "id": 10,
+      "name": "sex_value",
+      "type": "value",
+      "regex": "[ЧЖчжМмMmFf]",
+      "position": [
+        {
+          "dep_id": 9,
+          "pos": "TOP"
+        }
+      ]
     }
-  ],
+  ]
+}
