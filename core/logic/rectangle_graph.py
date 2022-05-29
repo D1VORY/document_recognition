@@ -11,6 +11,14 @@ class Point:
         self.x = x
         self.y = y
 
+    @property
+    def int_x(self):
+        return int(self.x)
+
+    @property
+    def int_y(self):
+        return int(self.y)
+
     def get_distance(self, point):
         return math.sqrt((self.x - point.x)**2 + (self.y - point.y)**2)
 
@@ -44,7 +52,7 @@ class Rectangle:
     BOTTOM_LEFT = 'BOTTOM_LEFT'
 
 
-    def __init__(self, point1, point2):
+    def __init__(self, point1, point2, text=''):
         """
         rectangle on the image
 
@@ -63,6 +71,7 @@ class Rectangle:
         self.length = abs(point2.x - point1.x)
         self.height = abs(point2.y - point1.y)
         self.center = Point((point2.x + point1.x) / 2, (point2.y + point1.y) / 2)
+        self.text = text
 
     @property
     def top_left_point(self):
@@ -83,21 +92,21 @@ class Rectangle:
     def get_distance(self, rectangle):
         position = self.get_relative_position(rectangle)
         res = 0
-        if position == Node.RIGHT:
+        if position == Node.NodePosition.RIGHT:
             res = rectangle.top_left_point.x - self.top_right_point.x
-        elif position == Node.TOP_RIGHT:
+        elif position == Node.NodePosition.TOP_RIGHT:
             res = self.top_right_point.get_distance(rectangle.bottom_left_point)
-        elif position == Node.TOP:
+        elif position == Node.NodePosition.TOP:
             res = self.top_left_point.y - rectangle.bottom_left_point.y
-        elif position == Node.TOP_LEFT:
+        elif position == Node.NodePosition.TOP_LEFT:
             res = self.top_left_point.get_distance(rectangle.bottom_right_point)
-        elif position == Node.LEFT:
+        elif position == Node.NodePosition.LEFT:
             res = self.top_left_point.x - rectangle.top_right_point.x
-        elif position == Node.BOTTOM_LEFT:
+        elif position == Node.NodePosition.BOTTOM_LEFT:
             res = self.bottom_left_point.get_distance(rectangle.top_right_point)
-        elif position == Node.BOTTOM:
+        elif position == Node.NodePosition.BOTTOM:
             res = rectangle.top_left_point.y - self.bottom_left_point.y
-        elif position == Node.BOTTOM_RIGHT:
+        elif position == Node.NodePosition.BOTTOM_RIGHT:
             res = self.bottom_right_point.get_distance(rectangle.top_left_point)
         return abs(res)
 
@@ -106,25 +115,25 @@ class Rectangle:
         #angle = self.center.get_angle(rect.center)
         angle = self.point1.get_angle(rect.point1)
         if angle <= 22.5 or angle >= 337.5:
-            return Node.RIGHT
+            return Node.NodePosition.RIGHT
         elif 67.5 > angle > 22.5:
-            return Node.TOP_RIGHT
+            return Node.NodePosition.TOP_RIGHT
         elif 112.5 >= angle >= 67.5:
-            return Node.TOP
+            return Node.NodePosition.TOP
         elif 157.5 > angle > 112.5:
-            return Node.TOP_LEFT
+            return Node.NodePosition.TOP_LEFT
         elif 202.5 >= angle >= 157.5:
-            return Node.LEFT
+            return Node.NodePosition.LEFT
         elif 247.5 > angle > 202.5:
-            return Node.BOTTOM_LEFT
+            return Node.NodePosition.BOTTOM_LEFT
         elif 292.5 >= angle >= 247.5:
-            return Node.BOTTOM
+            return Node.NodePosition.BOTTOM
         elif 337.5 > angle > 292.5:
-            return Node.BOTTOM_RIGHT
+            return Node.NodePosition.BOTTOM_RIGHT
 
 
 class YoloRectangle(Rectangle):
-    def __init__(self, center_point, width, height):
+    def __init__(self, center_point, width, height, text=''):
         half_width = int(width / 2)
         half_height = int(height / 2)
 
@@ -137,7 +146,7 @@ class YoloRectangle(Rectangle):
 
         top_left = Point(top, left)
         bottom_right = Point(center_point.x + half_width, center_point.y + half_height)
-        super().__init__(top_left, bottom_right)
+        super().__init__(top_left, bottom_right, text)
 
 
 class RectangleDocumentGraph:
@@ -149,7 +158,8 @@ class RectangleDocumentGraph:
         self.calculate_distances()
         self.graph = DocumentGraph()
         for i in range(self.n):
-            node = Node(node_id=i, value=f'{self.rectangles[i].top_left_point} ___ {self.rectangles[i].bottom_right_point}')
+            value = self.rectangles[i].text or f'{self.rectangles[i].top_left_point} ___ {self.rectangles[i].bottom_right_point}'
+            node = Node(node_id=i, value=value)
             self.graph.add_to_graph(node)
 
     def build_rectangle_graph(self):

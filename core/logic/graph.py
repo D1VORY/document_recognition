@@ -3,14 +3,16 @@ import itertools
 
 class Node:
     newid = itertools.count()
-    TOP = 'TOP'
-    BOTTOM = 'BOTTOM'
-    RIGHT = 'RIGHT'
-    LEFT = 'LEFT'
-    TOP_RIGHT = 'TOP_RIGHT'
-    TOP_LEFT = 'TOP_LEFT'
-    BOTTOM_RIGHT = 'BOTTOM_RIGHT'
-    BOTTOM_LEFT = 'BOTTOM_LEFT'
+
+    class NodePosition:
+        TOP = 'TOP'
+        BOTTOM = 'BOTTOM'
+        RIGHT = 'RIGHT'
+        LEFT = 'LEFT'
+        TOP_RIGHT = 'TOP_RIGHT'
+        TOP_LEFT = 'TOP_LEFT'
+        BOTTOM_RIGHT = 'BOTTOM_RIGHT'
+        BOTTOM_LEFT = 'BOTTOM_LEFT'
 
     class NodeType:
         ANCHOR = 'anchor'
@@ -35,52 +37,52 @@ class Node:
     @classmethod
     def get_reversed_position(cls, position):
         reversed = {
-            cls.TOP: cls.BOTTOM,
-            cls.BOTTOM: cls.TOP,
-            cls.RIGHT: cls.LEFT,
-            cls.LEFT: cls.RIGHT,
-            cls.TOP_RIGHT: cls.BOTTOM_LEFT,
-            cls.TOP_LEFT: cls.BOTTOM_RIGHT,
-            cls.BOTTOM_LEFT: cls.TOP_RIGHT,
-            cls.BOTTOM_RIGHT: cls.TOP_LEFT,
+            cls.NodePosition.TOP: cls.NodePosition.BOTTOM,
+            cls.NodePosition.BOTTOM: cls.NodePosition.TOP,
+            cls.NodePosition.RIGHT: cls.NodePosition.LEFT,
+            cls.NodePosition.LEFT: cls.NodePosition.RIGHT,
+            cls.NodePosition.TOP_RIGHT: cls.NodePosition.BOTTOM_LEFT,
+            cls.NodePosition.TOP_LEFT: cls.NodePosition.BOTTOM_RIGHT,
+            cls.NodePosition.BOTTOM_LEFT: cls.NodePosition.TOP_RIGHT,
+            cls.NodePosition.BOTTOM_RIGHT: cls.NodePosition.TOP_LEFT,
         }
         return reversed.get(position)
 
 
     def get_corresponding_attr(self, position: str):
-        if position == self.RIGHT:
+        if position == self.NodePosition.RIGHT:
             return self.right_node
-        elif position == self.TOP_RIGHT:
+        elif position == self.NodePosition.TOP_RIGHT:
             return self.top_right_node
-        elif position == self.TOP:
+        elif position == self.NodePosition.TOP:
             return self.top_node
-        elif position == self.TOP_LEFT:
+        elif position == self.NodePosition.TOP_LEFT:
             return self.top_left_node
-        elif position == self.LEFT:
+        elif position == self.NodePosition.LEFT:
             return self.left_node
-        elif position == self.BOTTOM_LEFT:
+        elif position == self.NodePosition.BOTTOM_LEFT:
             return self.bottom_left_node
-        elif position == self.BOTTOM:
+        elif position == self.NodePosition.BOTTOM:
             return self.bottom_node
-        elif position == self.BOTTOM_RIGHT:
+        elif position == self.NodePosition.BOTTOM_RIGHT:
             return self.bottom_right_node
 
     def set_to_corresponding_attr(self, position: str, node):
-        if position == self.RIGHT:
+        if position == self.NodePosition.RIGHT:
             self.right_node = node
-        elif position == self.TOP_RIGHT:
+        elif position == self.NodePosition.TOP_RIGHT:
             self.top_right_node = node
-        elif position == self.TOP:
+        elif position == self.NodePosition.TOP:
             self.top_node = node
-        elif position == self.TOP_LEFT:
+        elif position == self.NodePosition.TOP_LEFT:
             self.top_left_node = node
-        elif position == self.LEFT:
+        elif position == self.NodePosition.LEFT:
             self.left_node = node
-        elif position == self.BOTTOM_LEFT:
+        elif position == self.NodePosition.BOTTOM_LEFT:
             self.bottom_left_node = node
-        elif position == self.BOTTOM:
+        elif position == self.NodePosition.BOTTOM:
             self.bottom_node = node
-        elif position == self.BOTTOM_RIGHT:
+        elif position == self.NodePosition.BOTTOM_RIGHT:
             self.bottom_right_node = node
         return self.get_corresponding_attr(position)
 
@@ -89,6 +91,9 @@ class Node:
             self.set_to_corresponding_attr(position, other_node)
             reversed_position = self.get_reversed_position(position)
             other_node.set_to_corresponding_attr(reversed_position, self)
+
+    def __repr__(self):
+        return f'{self.id} | {self.value}'
 
 
 class DocumentGraph:
@@ -111,11 +116,15 @@ class DocumentGraph:
             return None
         return self.nodes[index]
 
-    def find_corresponding_node(self, node, graph2):
+
+class PhotoDocumentGraph(DocumentGraph):
+    def extract_features(self, nodes):
         pass
 
-    def compare_graphs(self, graph2):
+
+class TemplateDocumentGraph(DocumentGraph):
+
+    def compare(self, graph):
+        """Compares template graph with graph from photo, returns corresponding nodes"""
         pass
 
-    def get_related_info_from_graph(self, graph2):
-        pass

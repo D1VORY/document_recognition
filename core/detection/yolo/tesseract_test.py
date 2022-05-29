@@ -2,7 +2,7 @@ import cv2
 import pytesseract
 import numpy as np
 
-pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+#pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 
 
@@ -70,7 +70,7 @@ def match_template(image, template):
 
 
 
-img = cv2.imread('im1.jpg')
+img = cv2.imread('im3.jpg')
 #img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
 # gray = get_grayscale(img)
@@ -98,6 +98,6 @@ for b in boxes.splitlines():
     img = cv2.rectangle(img, (int(b[1]), h - int(b[2])), (int(b[3]), h - int(b[4])), (0, 255, 0), 2)
 
 #print(boxes)
-cv2.imwrite('tes_res_rec.jpg', img)
-#cv2.imshow('img', img)
-#cv2.waitKey(0)
+#cv2.imwrite('tes_res_rec.jpg', img)
+cv2.imshow('img', img)
+cv2.waitKey(0)

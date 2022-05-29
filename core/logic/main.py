@@ -18,6 +18,8 @@ recs = [
 rec1, rec2 = recs[0], recs[5]
 
 
+
+
 graph = RectangleDocumentGraph(recs)
 graph.build_rectangle_graph()
 
