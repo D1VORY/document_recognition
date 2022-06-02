@@ -25,8 +25,8 @@ class JSONTemplate:
 
 
 
-dct = json.load(open('v3.json'))
-tplt = JSONTemplate(dct)
-tplt.build_graph()
-
-print('IM FUCKING UMMING')
+# dct = json.load(open('v3.json'))
+# tplt = JSONTemplate(dct)
+# tplt.build_graph()
+#
+# print('IM FUCKING UMMING')
