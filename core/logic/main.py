@@ -21,7 +21,7 @@ rec1, rec2 = recs[0], recs[5]
 json_example = json.load(open('v3.json', encoding='utf-8'))
 
 
-img3_graph = pickle.load(open('img3_graph.pickle', 'rb'))
+img3_graph = pickle.load(open('im3_graph.pickle', 'rb'))
 
 template_graph = JSONTemplate(json_example)
 template_graph.build_graph()

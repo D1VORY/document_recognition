@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 from yolov4.tf import YOLOv4
 import pytesseract
+import pickle
 
 from core.logic.rectangle_graph import YoloRectangle, Point, RectangleDocumentGraph
 
@@ -11,12 +12,8 @@ yolo.config.parse_names("obj.names")
 yolo.config.parse_cfg("custom-yolov4-detector.cfg")
 
 yolo.make_model()
-yolo.load_weights('./weights/v2/custom_yolov4_v2.weights', weights_type="yolo")
-#yolo.summary(summary_type="yolo")
-#yolo.summary()
+yolo.load_weights('./weights/v3/custom-yolov4-detector_best.weights', weights_type="yolo")
 
-#yolo.inference(media_path="piia.jpg")
-#yolo.get_yolo_detections()
 
 frame = cv2.imread('im3.jpg')
 #frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -44,21 +41,8 @@ for x, y, width, height, _, _ in res_bboxes:
 graph = RectangleDocumentGraph(yolo_recs)
 graph.build_rectangle_graph()
 
-#cv2.imwrite('im41.jpg', image)
-#cv2.rectangle(image, (10,10), (100, 100), color=(0, 255, 0), thickness=3)
-# rec = YoloRectangle(center_point=Point(fst_bbox[0], fst_bbox[1]), width=fst_bbox[2], height=fst_bbox[3])
-# roi = image[rec.bottom_right_point.int_y: rec.top_left_point.int_y, rec.top_left_point.int_x: rec.bottom_right_point.int_x,:]
-# img_box =0
-# text = pytesseract.image_to_string(roi, config='--oem 3 --psm 6', lang='ukr+eng')
-# cv2.imshow('ROI', roi)
-cv2.imshow('shit', image)
-k = cv2.waitKey(0)
-# yolo.inference(media_path="road.mp4", is_image=False)
-#
-# yolo.inference(
-#     "/dev/video0",
-#     is_image=False,
-#     cv_apiPreference=cv2.CAP_V4L2,
-#     cv_frame_size=(640, 480),
-#     cv_fourcc="YUYV",
-# )
+cv2.imwrite('im3_improved.jpg', image)
+pickle.dump(graph, open('im3_graph.pickle', 'wb'))
+
+# cv2.imshow('shit', image)
+# cv2.waitKey(0)

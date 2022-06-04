@@ -15,6 +15,7 @@ class JSONTemplate:
                 node_id=field.get('id'),
                 node_type=field.get('type'),
                 name=field.get('name'),
+                value=field.get('regex')
             )
             self.graph.add_to_graph(node)
         for field, node in zip(self.fields, self.graph.nodes):
