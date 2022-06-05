@@ -1,4 +1,6 @@
 import json
+import re
+
 import Levenshtein as lev
 import numpy as np
 
@@ -10,7 +12,7 @@ class JSONTemplate:
         self.languages = data.get('language')
         self.fields = data.get('fields')
         self.graph = DocumentGraph()
-        self.correspondance_dict = {}  # key - id in template; value - id in photo
+        self.correspondance_dict = {}  # key - id in photo; value - id in template;
 
     def build_graph(self):
         for field in self.fields:
@@ -27,8 +29,20 @@ class JSONTemplate:
                 other_node = self.graph.get_node_by_id(position.get('dep_id'))
                 node.set_relation(other_node, position_direction)
 
+    def get_corresponding_template_node(self, image_node):
+        node_id = self.correspondance_dict.get(image_node.id)
+        if not node_id:
+            raise ValueError('Node does not have a corrseponding item')
+        return self.graph.get_node_by_id(node_id)
+
     @staticmethod
-    def get_distance(a: str, b: str):
+    def _clear_string(string):
+        return string.replace('/n', '').replace('/r', '').strip()
+
+    @classmethod
+    def get_distance(cls, a: str, b: str):
+        a = cls._clear_string(a)
+        b = cls._clear_string(b)
         dist = lev.distance(a, b)
         return dist / max(len(a), len(b))
 
@@ -55,17 +69,30 @@ class JSONTemplate:
             closest_candidate = nodes[closest_candidate_index]
             if int(closest_candidate_distance) < 1:
                 target_anchors.append(closest_candidate)
-                self.correspondance_dict[anchors[i].id] = closest_candidate.id
+                self.correspondance_dict[closest_candidate.id] = anchors[i].id
         return target_anchors
 
-    def _extract_values(self, anchors):
-        pass
+    def _extract_values(self, image_anchors, image_nodes):
+        image_values = []
+        for image_anchor in image_anchors:
+            corr_json_anchor = self.get_corresponding_template_node(image_anchor)
+            image_anchor_relations = image_anchor.get_existing_relations()
+            json_anchor_relations = corr_json_anchor.get_existing_relations()
+            for json_position, json_node in json_anchor_relations.items():
+                corresponding_image_node = image_anchor.get_corresponding_attr(json_position)
+                regexp = json_node.value
+                matches = re.match(regexp, corresponding_image_node.value)
+                if matches:
+                    image_values.append(corresponding_image_node)
+                    self.correspondance_dict[corresponding_image_node.id] = json_node.id
+        return image_values
+
 
     def compare(self, graph):
         """Compares template graph with graph from photo, returns corresponding nodes"""
-        target_nodes = graph.nodes
-        extracted_anchors = self._extract_anchors(graph.nodes)
-        values = self._extract_values()
+        image_nodes = graph.nodes
+        extracted_anchors = self._extract_anchors(image_nodes)
+        values = self._extract_values(extracted_anchors, image_nodes)
 
 # dct = json.load(open('v3.json'))
 # tplt = JSONTemplate(dct)

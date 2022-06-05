@@ -56,7 +56,7 @@ class Detector:
             text = pytesseract.image_to_string(roi, config='--oem 3 --psm 6', lang='ukr+eng')
             if not text:
                 continue
-            rec.text = text
+            rec.text = text.replace('\n', '')
             yolo_recs.append(rec)
         graph = RectangleDocumentGraph(yolo_recs)
         graph.build_rectangle_graph()

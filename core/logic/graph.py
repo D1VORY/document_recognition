@@ -15,6 +15,7 @@ class Node:
         TOP_LEFT = 'TOP_LEFT'
         BOTTOM_RIGHT = 'BOTTOM_RIGHT'
         BOTTOM_LEFT = 'BOTTOM_LEFT'
+        ALL_POSITIONS = [TOP, BOTTOM, RIGHT, LEFT, TOP_RIGHT, TOP_LEFT, BOTTOM_RIGHT, BOTTOM_LEFT]
 
     class NodeType:
         ANCHOR = 'anchor'
@@ -93,6 +94,46 @@ class Node:
             self.set_to_corresponding_attr(position, other_node)
             reversed_position = self.get_reversed_position(position)
             other_node.set_to_corresponding_attr(reversed_position, self)
+
+    def get_existing_relations(self):
+        relations = {}
+        for position in self.NodePosition.ALL_POSITIONS:
+            value = self.get_corresponding_attr(position)
+            if value:
+                relations[position] = value
+
+
+        #     self.NodePosition.TOP: self.top_node,
+        #     self.NodePosition.BOTTOM: self.bottom_node,
+        #     self.NodePosition.RIGHT: self.right_node,
+        #     self.NodePosition.LEFT: self.left_node,
+        #     self.NodePosition.TOP_RIGHT: self.top_right_node,
+        #     self.NodePosition.TOP_LEFT: self.top_left_node,
+        #     self.NodePosition.BOTTOM_LEFT: self.bottom_left_node,
+        #     self.NodePosition.BOTTOM_RIGHT: self.bottom_right_node,
+        # }
+        # for key in relations:
+        #     if relations.get(key) is None:
+        #         relations.pop(key, None)
+        # if self.top_node:
+        #     relations[self.NodePosition.TOP] = self.top_node
+        # if self.bottom_node:
+        #     relations[self.NodePosition.BOTTOM] = self.bottom_node
+        # if self.right_node:
+        #     relations[self.NodePosition.RIGHT] = self.right_node
+        # if self.left_node:
+        #     relations[self.NodePosition.LEFT] = self.left_node
+        # if self.top_right_node:
+        #     relations[self.NodePosition.TOP_RIGHT] = self.top_right_node
+        # if self.top_left_node:
+        #     relations[self.NodePosition.TOP_LEFT] = self.top_left_node
+        # if self.bottom_right_node:
+        #     relations[self.NodePosition.BOTTOM_RIGHT] = self.bottom_right_node
+        # if self.bottom_left_node:
+        #     relations[self.NodePosition.BOTTOM_LEFT] = self.bottom_left_node
+
+        return relations
+
 
     def __repr__(self):
         return f'{self.id} | {self.value}'

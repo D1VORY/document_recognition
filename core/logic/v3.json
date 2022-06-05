@@ -13,7 +13,7 @@
       "id": 2,
       "name": "surname_ukr",
       "type": "value",
-      "regex": "а-яА-Я",
+      "regex": "[а-яА-Я'ʼґєїҐЄЇъЪ-]",
       "position": [
         {
           "dep_id": 1,
@@ -29,7 +29,7 @@
       "id": 3,
       "name": "surname_eng",
       "type": "value",
-      "regex": "a-zA-Z",
+      "regex": "[a-zA-Z/W]",
       "position": [
         {
           "dep_id": 2,
@@ -52,7 +52,7 @@
       "id": 5,
       "name": "name_ukr",
       "type": "value",
-      "regex": "а-яА-Я",
+      "regex": "[а-яА-Я'ʼґєїҐЄЇъЪ-]",
       "position": [
         {
           "dep_id": 4,
@@ -68,7 +68,7 @@
       "id": 6,
       "name": "name_eng",
       "type": "value",
-      "regex": "a-zA-Z",
+      "regex": "[a-zA-Z/W]",
       "position": [
         {
           "dep_id": 5,
@@ -91,7 +91,7 @@
       "id": 8,
       "name": "middle_name_value",
       "type": "value",
-      "regex": "а-яА-Я",
+      "regex": "[а-яА-Я'ʼґєїҐЄЇъЪ-]",
       "position": [
         {
           "dep_id": 7,
@@ -114,7 +114,7 @@
       "id": 10,
       "name": "sex_value",
       "type": "value",
-      "regex": "[ЧЖчжМмMmFf]",
+      "regex": "[ЧЖчжМмMmFf//]",
       "position": [
         {
           "dep_id": 9,
