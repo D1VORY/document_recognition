@@ -1,4 +1,6 @@
 import itertools
+import Levenshtein as lev
+import numpy as np
 
 
 class Node:
@@ -123,8 +125,31 @@ class PhotoDocumentGraph(DocumentGraph):
 
 
 class TemplateDocumentGraph(DocumentGraph):
+    @staticmethod
+    def get_distance(a: str, b: str):
+        dist = lev.distance(a, b)
+        return dist / max(len(a), len(b))
+
+    def _get_anchors(self):
+        return [node for node in self.nodes if node.node_type == Node.NodeType.ANCHOR]
+
+    def _extract_anchors(self, nodes, thresh=0.5):
+        anchors = self._get_anchors()
+        anchors_len = len(anchors)
+        nodes_len = len(nodes)
+        distance_matrix = np.zeros(shape=(anchors_len, nodes_len))
+        for i in range(anchors_len):
+            for j in range(nodes_len):
+                distance = self.get_distance(anchors[i].value, nodes[j].value)
+                if distance > thresh:
+                    distance=1.0
+                distance_matrix[i, j] = distance
+        indeces_of_sorted = np.argsort(distance_matrix, axis=1)
+        for i in range(anchors_len):
+            pass
+        return 'cum'
 
     def compare(self, graph):
         """Compares template graph with graph from photo, returns corresponding nodes"""
-        pass
+        self._extract_anchors(graph.nodes)
 
