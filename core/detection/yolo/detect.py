@@ -15,7 +15,7 @@ yolo.make_model()
 yolo.load_weights('./weights/v3/custom-yolov4-detector_best.weights', weights_type="yolo")
 
 
-frame = cv2.imread('im3.jpg')
+frame = cv2.imread('../im3.jpg')
 #frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 bboxes = yolo.predict(frame, 0.5)
 
