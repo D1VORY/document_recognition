@@ -17,7 +17,7 @@ yolo.load_weights('./weights/v3/custom-yolov4-detector_best.weights', weights_ty
 
 frame = cv2.imread('im3.jpg')
 #frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-bboxes = yolo.predict(frame, 0.25)
+bboxes = yolo.predict(frame, 0.5)
 
 
 image = np.copy(frame)
@@ -35,14 +35,16 @@ for x, y, width, height, _, _ in res_bboxes:
     cv2.rectangle(image, (int(rec.point1.x), int(rec.point1.y)), (int(rec.point2.x), int(rec.point2.y)), color=(0, 255, 0), thickness=3)
     roi = image[rec.bottom_right_point.int_y: rec.top_left_point.int_y, rec.top_left_point.int_x: rec.bottom_right_point.int_x,:]
     text = pytesseract.image_to_string(roi, config='--oem 3 --psm 6', lang='ukr+eng')
+    if not text:
+        continue
     rec.text = text
     yolo_recs.append(rec)
 
 graph = RectangleDocumentGraph(yolo_recs)
 graph.build_rectangle_graph()
 
-cv2.imwrite('im3_improved.jpg', image)
+#cv2.imwrite('im3_improved.jpg', image)
 pickle.dump(graph, open('im3_graph.pickle', 'wb'))
 
-# cv2.imshow('shit', image)
-# cv2.waitKey(0)
+cv2.imshow('shit', image)
+cv2.waitKey(0)
