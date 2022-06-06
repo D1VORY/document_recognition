@@ -157,3 +157,4 @@ cython_debug/
 
 datasets/
 *.weights
+textrecogintion-352319-83bc8e068b7f.json

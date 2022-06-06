@@ -148,6 +148,17 @@ class YoloRectangle(Rectangle):
         bottom_right = Point(center_point.x + half_width, center_point.y + half_height)
         super().__init__(top_left, bottom_right, text)
 
+class GVisionRectangle(Rectangle):
+    def __init__(self, point1, point2, point3, point4, text=''):
+        points = [point1, point2, point3, point4]
+        top_left = point1
+        bottom_right = point4
+        for point in points:
+            if point.y <= top_left.y and point.x <= top_left.x:
+                top_left = point
+            if point.y >= bottom_right.y and point.x >= bottom_right.x:
+                bottom_right = point
+        super().__init__(point1, point3, text)
 
 class RectangleDocumentGraph:
 
