@@ -159,6 +159,14 @@ class DocumentGraph:
             return None
         return self.nodes[index]
 
+    def cleanup(self):
+        for node in self.nodes:
+            if node.value == '/' and node.left_node and node.right_node:
+                new_value = node.left_node.value + node.value + node.right_node.value
+                node.value = new_value
+                node.left_node.value = new_value
+                node.right_node.value = new_value
+
 
 class PhotoDocumentGraph(DocumentGraph):
     def extract_features(self, nodes):
@@ -188,7 +196,7 @@ class TemplateDocumentGraph(DocumentGraph):
         indeces_of_sorted = np.argsort(distance_matrix, axis=1)
         for i in range(anchors_len):
             pass
-        return 'cum'
+        return anchors
 
     def compare(self, graph):
         """Compares template graph with graph from photo, returns corresponding nodes"""

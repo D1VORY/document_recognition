@@ -87,15 +87,18 @@ class JSONTemplate:
                     self.correspondance_dict[corresponding_image_node.id] = json_node.id
         return image_values
 
+    def build_dict_response(self, values):
+        res = {}
+        for val in values:
+            corrseponding_json_node = self.graph.get_node_by_id(self.correspondance_dict.get(val.id))
+            if corrseponding_json_node:
+                res[corrseponding_json_node.name] = val.value
+        return res
 
     def compare(self, graph):
         """Compares template graph with graph from photo, returns corresponding nodes"""
         image_nodes = graph.nodes
         extracted_anchors = self._extract_anchors(image_nodes)
         values = self._extract_values(extracted_anchors, image_nodes)
-
-# dct = json.load(open('v3.json'))
-# tplt = JSONTemplate(dct)
-# tplt.build_graph()
-#
-# print('IM FUCKING UMMING')
+        response = self.build_dict_response(values)
+        return response

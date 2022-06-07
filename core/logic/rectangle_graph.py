@@ -30,8 +30,11 @@ class Point:
         vector2 = Point(point.x - self.x, point.y - self.y)
         vector1_module = vector1.get_distance(Point(0, 0))
         vector2_module = vector2.get_distance(Point(0, 0))
-
-        cos_alpha = (vector1.x * vector2.x + vector1.y * vector2.y) / (vector1_module * vector2_module)
+        try:
+            cos_alpha = (vector1.x * vector2.x + vector1.y * vector2.y) / (vector1_module * vector2_module)
+        except ZeroDivisionError:
+            print('FUCK')
+            return 0
         angle_alpha = math.acos(cos_alpha) * 180 / math.pi
         if point.y > self.y:
             return 360 - angle_alpha
@@ -151,14 +154,17 @@ class YoloRectangle(Rectangle):
 class GVisionRectangle(Rectangle):
     def __init__(self, point1, point2, point3, point4, text=''):
         points = [point1, point2, point3, point4]
-        top_left = point1
-        bottom_right = point4
-        for point in points:
-            if point.y <= top_left.y and point.x <= top_left.x:
-                top_left = point
-            if point.y >= bottom_right.y and point.x >= bottom_right.x:
-                bottom_right = point
-        super().__init__(point1, point3, text)
+        all_x = [point.x for point in points]
+        all_y = [point.y for point in points]
+        top_left = Point(min(all_x), min(all_y))
+        bottom_right = Point(max(all_x), max(all_y))
+        # bottom_right = point4
+        # for point in points:
+        #     if point.y <= top_left.y and point.x <= top_left.x:
+        #         top_left = point
+        #     if point.y >= bottom_right.y and point.x >= bottom_right.x:
+        #         bottom_right = point
+        super().__init__(top_left, bottom_right, text)
 
 class RectangleDocumentGraph:
 
@@ -185,6 +191,9 @@ class RectangleDocumentGraph:
     def calculate_distances(self):
         for i in range(self.n):
             for j in range(self.n):
-                self.distances[i, j] = self.rectangles[i].get_distance(self.rectangles[j])
+                if i == j:
+                    self.distances[i, j] = 0
+                else:
+                    self.distances[i, j] = self.rectangles[i].get_distance(self.rectangles[j])
         return self.distances
 
