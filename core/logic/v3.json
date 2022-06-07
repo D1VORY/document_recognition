@@ -13,7 +13,7 @@
       "id": 2,
       "name": "surname_ukr",
       "type": "value",
-      "regex": "[а-яА-Я'ʼґєїҐЄЇъЪ-]",
+      "regex": "[а-яА-Я'ʼґєїҐЄЇъЪ-]+",
       "position": [
         {
           "dep_id": 1,
@@ -29,7 +29,7 @@
       "id": 3,
       "name": "surname_eng",
       "type": "value",
-      "regex": "[a-zA-Z/W]",
+      "regex": "[a-zA-Z/W]+",
       "position": [
         {
           "dep_id": 2,
@@ -52,7 +52,7 @@
       "id": 5,
       "name": "name_ukr",
       "type": "value",
-      "regex": "[а-яА-Я'ʼґєїҐЄЇъЪ-]",
+      "regex": "[а-яА-Я'ʼґєїҐЄЇъЪ-]+",
       "position": [
         {
           "dep_id": 4,
@@ -68,7 +68,7 @@
       "id": 6,
       "name": "name_eng",
       "type": "value",
-      "regex": "[a-zA-Z/W]",
+      "regex": "[a-zA-Z/W]+",
       "position": [
         {
           "dep_id": 5,
@@ -91,7 +91,7 @@
       "id": 8,
       "name": "middle_name_value",
       "type": "value",
-      "regex": "[а-яА-Я'ʼґєїҐЄЇъЪ-]",
+      "regex": "[а-яА-Я'ʼґєїҐЄЇъЪ-]+",
       "position": [
         {
           "dep_id": 7,
@@ -114,10 +114,117 @@
       "id": 10,
       "name": "sex_value",
       "type": "value",
-      "regex": "[ЧЖчжМмMmFf//]",
+      "regex": "[ЧЖчжМмMmFf//]+",
       "position": [
         {
           "dep_id": 9,
+          "pos": "TOP"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "name": "date_birth",
+      "type": "anchor",
+      "regex": "дата народження/ Date of birth",
+      "position": []
+    },
+    {
+      "id": 12,
+      "name": "date_birth_value",
+      "type": "value",
+      "regex": "[\\d\\s]+",
+      "position": [
+        {
+          "dep_id": 11,
+          "pos": "TOP"
+        },
+        {
+          "dep_id": 13,
+          "pos": "BOTTOM"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "name": "expires_in",
+      "type": "anchor",
+      "regex": "дійсний до/ Date of expire",
+      "position": []
+    },
+    {
+      "id": 14,
+      "name": "expires_in_value",
+      "type": "value",
+      "regex": "[\\d\\s]+",
+      "position": [
+        {
+          "dep_id": 13,
+          "pos": "TOP"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "name": "nationality",
+      "type": "anchor",
+      "regex": "Громадянтсво/ Nationality",
+      "position": []
+    },
+    {
+      "id": 16,
+      "name": "nationality_value",
+      "type": "value",
+      "regex": "[\\w/]+",
+      "position": [
+        {
+          "dep_id": 15,
+          "pos": "TOP"
+        },
+        {
+          "dep_id": 17,
+          "pos": "BOTTOM"
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "name": "record_no",
+      "type": "anchor",
+      "regex": "Запис No/ Record No",
+      "position": []
+    },
+    {
+      "id": 18,
+      "name": "record_no_value",
+      "type": "value",
+      "regex": "[\\d-]+",
+      "position": [
+        {
+          "dep_id": 17,
+          "pos": "TOP"
+        },
+        {
+          "dep_id": 19,
+          "pos": "BOTTOM"
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "name": "document_number",
+      "type": "anchor",
+      "regex": "Документ No/ Document No",
+      "position": []
+    },
+    {
+      "id": 20,
+      "name": "document_number_value",
+      "type": "value",
+      "regex": "[\\d]+",
+      "position": [
+        {
+          "dep_id": 19,
           "pos": "TOP"
         }
       ]
