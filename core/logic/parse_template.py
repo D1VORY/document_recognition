@@ -72,33 +72,39 @@ class JSONTemplate:
                 self.correspondance_dict[closest_candidate.id] = anchors[i].id
         return target_anchors
 
-    def _extract_values(self, image_anchors, image_nodes):
+    def _extract_values_from_corrsepnding_nodes(self, image_anchors):
         image_values = []
         for image_anchor in image_anchors:
             corr_json_anchor = self.get_corresponding_template_node(image_anchor)
-            image_anchor_relations = image_anchor.get_existing_relations()
+            # image_anchor_relations = image_anchor.get_existing_relations()
             json_anchor_relations = corr_json_anchor.get_existing_relations()
             for json_position, json_node in json_anchor_relations.items():
                 corresponding_image_node = image_anchor.get_corresponding_attr(json_position)
                 regexp = json_node.value
                 matches = re.match(regexp, corresponding_image_node.value)
-                if matches:
+                if matches and not corresponding_image_node.id in self.correspondance_dict:
                     image_values.append(corresponding_image_node)
                     self.correspondance_dict[corresponding_image_node.id] = json_node.id
         return image_values
 
-    def build_dict_response(self, values):
+    def _extract_values(self, image_anchors):
+        extracted = image_anchors
+        while len(extracted) > 0:
+            extracted = self._extract_values_from_corrsepnding_nodes(extracted)
+
+    def build_dict_response(self, image_graph):
         res = {}
-        for val in values:
-            corrseponding_json_node = self.graph.get_node_by_id(self.correspondance_dict.get(val.id))
-            if corrseponding_json_node:
-                res[corrseponding_json_node.name] = val.value
+        for image_node_id, json_node_id in self.correspondance_dict.items():
+            image_node = image_graph.get_node_by_id(image_node_id)
+            json_node = self.graph.get_node_by_id(json_node_id)
+            if json_node.node_type == Node.NodeType.VALUE:
+                res[json_node.name] = image_node.value
         return res
 
     def compare(self, graph):
         """Compares template graph with graph from photo, returns corresponding nodes"""
         image_nodes = graph.nodes
         extracted_anchors = self._extract_anchors(image_nodes)
-        values = self._extract_values(extracted_anchors, image_nodes)
-        response = self.build_dict_response(values)
+        self._extract_values(extracted_anchors)
+        response = self.build_dict_response(graph)
         return response
