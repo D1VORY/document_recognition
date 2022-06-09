@@ -14,7 +14,7 @@ async def recognize_yolo(file: UploadFile, template: str= Form(...)):
         json_data = json.loads(template)
     except json.decoder.JSONDecodeError:
         return {"message": "JSON ERROR"}
-    filename = os.path.join(os.path.dirname(__file__), 'media', file.filename)
+    filename = os.path.join(os.path.dirname(__file__), 'core', 'media', file.filename)
     async with aiofiles.open(filename, 'wb') as out_file:
         content = await file.read()  # async read
         await out_file.write(content)  # async write
@@ -28,7 +28,7 @@ async def recognize_vision_ai(file: UploadFile, template: str= Form(...)):
         json_data = json.loads(template)
     except json.decoder.JSONDecodeError:
         return {"message": "JSON ERROR"}
-    filename = os.path.join(os.path.dirname(__file__), 'media', file.filename)
+    filename = os.path.join(os.path.dirname(__file__), 'core', 'media', file.filename)
     async with aiofiles.open(filename, 'wb') as out_file:
         content = await file.read()  # async read
         await out_file.write(content)  # async write
