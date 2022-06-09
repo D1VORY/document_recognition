@@ -26,28 +26,6 @@ class GoogleDetector:
         text_annotations = response.text_annotations
         rectangle_graph = cls.build_rectangle_graph(text_annotations)
         return rectangle_graph.graph
-        # cv_image = cv2.imread(filename)
-        # cv_image = cls.draw_bounding_boxes(text_annotations, cv_image)
-        # cv2.imshow('shit', cv_image)
-        # cv2.waitKey(0)
-        # for page in response.full_text_annotation.pages:
-        #     for block in page.blocks:
-        #         print('\nBlock confidence: {}\n'.format(block.confidence))
-        #
-        #         for paragraph in block.paragraphs:
-        #             print('Paragraph confidence: {}'.format(
-        #                 paragraph.confidence))
-        #
-        #             for word in paragraph.words:
-        #                 word_text = ''.join([
-        #                     symbol.text for symbol in word.symbols
-        #                 ])
-        #                 print('Word text: {} (confidence: {})'.format(
-        #                     word_text, word.confidence))
-        #
-        #                 for symbol in word.symbols:
-        #                     print('\tSymbol: {} (confidence: {})'.format(
-        #                         symbol.text, symbol.confidence))
 
     @staticmethod
     def draw_bounding_boxes(text_annotations, image):
