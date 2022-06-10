@@ -33,7 +33,7 @@ class Point:
         try:
             cos_alpha = (vector1.x * vector2.x + vector1.y * vector2.y) / (vector1_module * vector2_module)
         except ZeroDivisionError:
-            print('FUCK')
+            print('Vectors are the same!')
             return 0
         angle_alpha = math.acos(cos_alpha) * 180 / math.pi
         if point.y > self.y:
@@ -63,7 +63,7 @@ class Rectangle:
         :param point2: bottom right point
         """
         if point1.x == point2.x or point1.y == point2.y:
-            raise ValueError('fuck you')
+            raise ValueError('Points are equal!')
         if point1.x > point2.x:
             point1, point2 = point2, point1
         if point1.y < point2.y:

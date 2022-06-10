@@ -24,8 +24,6 @@ image = np.copy(frame)
 height, width, _ = image.shape
 res_bboxes = bboxes * np.array([width, height, width, height, 1, 1])
 
-print('fuck')
-#
 
 kek = [res_bboxes[10], res_bboxes[5]]
 fst_bbox = res_bboxes[10]
@@ -46,5 +44,5 @@ graph.build_rectangle_graph()
 #cv2.imwrite('im3_improved.jpg', image)
 pickle.dump(graph, open('im3_graph.pickle', 'wb'))
 
-cv2.imshow('shit', image)
+cv2.imshow('image', image)
 cv2.waitKey(0)
